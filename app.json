@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "How To Poker",
+    "icon": "./logo.png",
+    "version": "1.0.0",
+    "slug": "poker-starting-hands-calculator",
+    "sdkVersion": "26.0.0",
+    "splash": {
+      "image": "./logo.png",
+      "backgroundColor": "#000000"
+    },
+    "ios": {
+      "bundleIdentifier": "com.fap.howtopoker"
+    },
+    "android": {
+      "package": "com.fap.howtopoker",
+      "versionCode": 1
+    }
+  }
+}
