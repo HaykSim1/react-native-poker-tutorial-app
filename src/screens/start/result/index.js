@@ -11,33 +11,43 @@ export default class StartScreen extends React.Component {
     __getAction = () => {
         const { position, checked, first, second } = this.props.navigation.state.params;
 
-        const preAction = checked === 1 ? 'folded' : checked === 2 ? 'called' : 'raised';
         const same = first.suit === second.suit;
 
-        const cards = results[position][preAction].cards;
+        const cards = results[position][checked].cards;
 
         let action = 'FOLD';
-
         cards.map(item => {
             if(item.sameSuit === same) {
                 const user = [first.key, second.key].sort();
-                const server = [item.first, item.second].sort();
+                const server = [item.first.toString(), item.second.toString()].sort();
+                console.log('--> user, server', user, server)
 
                 if(_.isEqual(user, server)) {
                     action = item.action;
                 }
             }
         });
-        return action.toUpperCase();
+
+        return action !== 'call20'
+            ? (<View style={styles.textContainer}>
+                <Text style={styles.text}>{action.toUpperCase()}</Text>
+                <Button text='Reset' raised primary onPress={() => this.props.navigation.navigate('General')}/>
+            </View>)
+            : (
+                <View style={styles.container}>
+                    <Text style={styles.text}>{action.toUpperCase()}*</Text>
+                    <Button text='Reset' raised primary onPress={() => this.props.navigation.navigate('General')}/>
+                    <Text style={styles.bottomText}>
+                        *You can call if your stack is more than 20x the amount you have to call
+                    </Text>
+                </View>
+            )
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>{this.__getAction()}</Text>
-                </View>
-                <Button text='Reset' raised primary onPress={() => this.props.navigation.navigate('General')}/>
+                {this.__getAction()}
             </View>
         );
     }
@@ -56,5 +66,11 @@ const styles = StyleSheet.create({
         color: COLOR.blueGrey600,
         fontSize: 30,
         fontWeight: 'bold',
+    },
+    bottomText: {
+        marginTop: 130,
+        color: COLOR.grey600,
+        fontSize: 12,
+        fontWeight: 'normal',
     }
 });

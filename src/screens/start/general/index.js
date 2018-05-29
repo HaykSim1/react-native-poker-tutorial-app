@@ -28,6 +28,21 @@ export default class StartScreen extends React.Component {
         },
     ];
 
+    beforeYou = [
+        {
+            label: 'Folded',
+            value: 'folded',
+        },
+        {
+            label: 'Called',
+            value: 'calles',
+        },
+        {
+            label: 'Raised',
+            value: 'raised',
+        },
+    ];
+
     constructor(props) {
         super(props);
 
@@ -35,8 +50,7 @@ export default class StartScreen extends React.Component {
         this.state = {
             players: 0,
             position: 'blind',
-            // checked values: 1 - folded, 2 - called, 3 - raised
-            checked: 1
+            checked: 'folded'
         }
     }
 
@@ -58,35 +72,23 @@ export default class StartScreen extends React.Component {
                 </View>
                 <View style={styles.row}>
                     <Dropdown
-                        value='blind'
+                        value={this.state.position}
                         label='Your position'
-                        onChangeText={(value) => this.setState({ position: value })}
+                        onChangeText={(position) => this.setState({ position })}
                         data={this.position}
                     />
                 </View>
                 <View style={styles.row}>
-                    <RadioButton
-                        label="Folded"
-                        checked={this.state.checked === 1}
-                        value="1"
-                        onSelect={() => this.setState({ checked: 1 })}
-                    />
-                    <RadioButton
-                        label="Called"
-                        checked={this.state.checked === 2}
-                        value="2"
-                        onSelect={() => this.setState({ checked: 2 })}
-                    />
-                    <RadioButton
-                        label="Raised"
-                        checked={this.state.checked === 3}
-                        value="3"
-                        onSelect={() => this.setState({ checked: 3 })}
+                    <Dropdown
+                        value={this.state.checked}
+                        label='Before you players are'
+                        onChangeText={(checked) => this.setState({ checked })}
+                        data={this.beforeYou}
                     />
                 </View>
                 <View style={styles.row}>
                     <Button
-                        text={'Continue'}
+                        text='Continue'
                         raised
                         accent
                         onPress={() => this.props.navigation.navigate('Hand', this.state)}
